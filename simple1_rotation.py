@@ -30,6 +30,6 @@ def animate(i):
     return point,
 
 # Création de l'animation
-anim = FuncAnimation(fig, animate, frames=100, interval=50, blit=True)
+anim = FuncAnimation(fig, animate, frames=360, interval=20, blit=True)
 
 plt.show()
