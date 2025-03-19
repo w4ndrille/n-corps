@@ -31,7 +31,7 @@ void calculate_accelerations(const vector<double>& positions, const vector<doubl
 }
 
 // Derivative function for RK4
-void deriv3(int n, double t, const vector<double>& y, vector<double>& dy, const vector<double>& masses) {
+void deriv(int n, double t, const vector<double>& y, vector<double>& dy, const vector<double>& masses) {
     vector<double> positions(y.begin(), y.begin() + 2 * N);
     vector<double> velocities(y.begin() + 2 * N, y.end());
     vector<double> accelerations(2 * N, 0.0);
@@ -87,7 +87,7 @@ int main() {
         }
         output << endl;
 
-        rk4(num_equations, t, y, dt, deriv3, masses);
+        rk4(num_equations, t, y, dt, deriv, masses);
         t += dt;
     }
 

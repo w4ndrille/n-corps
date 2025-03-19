@@ -19,7 +19,7 @@ for i in range(num_particles):
 # Add labels, legend, and grid
 plt.xlabel('x')
 plt.ylabel('y')
-plt.title('Trajectories of Particles')
+plt.title('Trajectories of Bodies')
 plt.legend()
 plt.grid(True)
 
