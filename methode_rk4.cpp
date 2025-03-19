@@ -6,9 +6,13 @@
 using namespace std;
 
 const double G = 6.67430e-11; // Gravitational constant
-const double Tmax = 10.0;
-const double dt = 0.01;
-const int N = 3; // Number of particles
+const double Tmax = 4.0e+7;
+const double dt = 10000;
+const int N = 2; // Number of particles
+const double Mass_Earth = 5.972e24; // Mass of the Earth
+const double Distance_Earth_Moon = 384400000; // Distance between the Earth and the Moon
+const double Distance_Earth_Sun = 149597870700; // Distance between the Earth and the Sun
+const double Mass_Sun = 1.989e30; // Mass of the Sun
 
 // Function to calculate gravitational accelerations
 void calculate_accelerations(const vector<double>& positions, const vector<double>& masses, vector<double>& accelerations) {
@@ -23,8 +27,8 @@ void calculate_accelerations(const vector<double>& positions, const vector<doubl
                 double r_squared = dx * dx + dy * dy + 1e-3; // Add softening factor
                 double r = sqrt(r_squared);
                 double force = G * masses[i] * masses[j] / (r_squared * r);
-                accelerations[2 * i] += force * dx;
-                accelerations[2 * i + 1] += force * dy;
+                accelerations[2 * i] += force * dx / masses[i];
+                accelerations[2 * i + 1] += force * dy / masses[i];
             }
         }
     }
@@ -38,7 +42,7 @@ void deriv(int n, double t, const vector<double>& y, vector<double>& dy, const v
 
     calculate_accelerations(positions, masses, accelerations);
 
-    for (int i = 0; i < N; ++i) {
+    for (int i = 0; i < N; ++i) { // Loop over particles
         dy[2 * i] = velocities[2 * i];         // dx/dt = vx
         dy[2 * i + 1] = velocities[2 * i + 1]; // dy/dt = vy
         dy[2 * N + 2 * i] = accelerations[2 * i];     // dvx/dt = ax
@@ -64,18 +68,27 @@ void rk4(int n, double t, vector<double>& y, double dx, void deriv(int, double, 
     }
 }
 
+
+
+
 int main() {
     int num_equations = 4 * N; // 2 for position and 2 for velocity per particle
     vector<double> y(num_equations, 0.0); // State vector: [x1, y1, x2, y2, ..., vx1, vy1, vx2, vy2, ...]
-    vector<double> masses(N, 1.0); // Masses of the particles
+    // Initialisation des masses pour le système Alpha Centauri
+    vector<double> masses = {Mass_Sun, Mass_Sun}; // Masses en multiples de la masse terrestre
 
     // Initial conditions
+    // y[0] = 0.0;                 y[1] = 0.0; // Particle 1 position
+    // y[2] = Distance_Earth_Sun;  y[3] = 0.0; // Particle 2 position
+    // y[4] = 0.0;                 y[5] = Distance_Earth_Sun; // Particle 3 position
+    // y[6] = 0.0;                 y[7] = 0.0; // Particle 1 velocity
+    // y[8] = 0.0;                 y[9] = 30000.0; // Particle 2 velocity
+    // y[10] = 0.0;                y[11] = 0.0; // Particle 3 velocity
+
     y[0] = 0.0; y[1] = 0.0; // Particle 1 position
-    y[2] = 1.0; y[3] = 0.0; // Particle 2 position
-    y[4] = 0.0; y[5] = 1.0; // Particle 3 position
-    y[6] = 0.0; y[7] = 0.0; // Particle 1 velocity
-    y[8] = 0.0; y[9] = 0.5; // Particle 2 velocity
-    y[10] = -0.5; y[11] = 0.0; // Particle 3 velocity
+    y[2] = Distance_Earth_Sun/100; y[3] = 0.0; // Particle 2 position
+    y[4] = 0.0; y[5] = 0.0; // Particle 1 velocity
+    y[6] = 0.0; y[7] = 100000.0; // Particle 2 velocity
 
     ofstream output("n_body_simulation.txt");
 
