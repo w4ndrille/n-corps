@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const double G = 1.0; // Gravitational constant
+const double G = 6.67430e-11; // Gravitational constant
 const double Tmax = 10.0;
 const double dt = 0.01;
 const int N = 3; // Number of particles
