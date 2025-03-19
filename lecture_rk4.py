@@ -1,21 +1,28 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Load the simulation data
+data = np.loadtxt('n_body_simulation.txt')
 
-x_numérique = np.loadtxt('write_results_q10.txt')
+# Extract time and positions
+time = data[:, 0]
+num_particles = (data.shape[1] - 1) // 2  # Number of particles
+positions = data[:, 1:]  # Exclude the time column
 
-# Solution analytique
-x0 = 1
-omega0 = 0.5
-x_analytique = x0 * np.cos(omega0 * x_numérique[:,0])
+# Plot trajectories of each particle
+plt.figure(figsize=(8, 6))
+for i in range(num_particles):
+    x = positions[:, 2 * i]     # x-coordinates of particle i
+    y = positions[:, 2 * i + 1] # y-coordinates of particle i
+    plt.plot(x, y, label=f'Particle {i + 1}')
 
-x = x_numérique[:,1] - x_analytique
-
-# Tracé de la figure
-plt.plot(x_numérique[:,0], x, label='Erreur')
+# Add labels, legend, and grid
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Trajectories of Particles')
 plt.legend()
-plt.title('Erreur entre la solution analytique et la solution numérique')
 plt.grid(True)
 
-plt.savefig('q10.png')
+# Save and show the plot
+plt.savefig('trajectories.png')
 plt.show()
