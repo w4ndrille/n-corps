@@ -98,14 +98,34 @@ double calculate_energy(const double y[], const double masses[]) {
     return energy_kin + energy_pot;
 }
 
+
+// Function to verify Kepler's third law
+void verify_kepler_law(const double y[], const double masses[]) {
+    double semi_major_axis = Distance_Earth_Sun; // Assuming circular orbit
+    double orbital_period = 2 * M_PI * sqrt(pow(semi_major_axis, 3) / (G * (masses[0] + masses[1])));
+    double kepler_ratio = pow(orbital_period, 2) / pow(semi_major_axis, 3);
+
+    cout << "Semi-major axis (a): " << semi_major_axis << " meters" << endl;
+    cout << "Orbital period (T): " << orbital_period << " seconds" << endl;
+    cout << "Kepler ratio (T^2 / a^3): " << kepler_ratio << endl;
+
+    // Check if the ratio is approximately constant
+    if (fabs(kepler_ratio - 4 * M_PI * M_PI / G) < 1e-6) {
+        cout << "Kepler's third law is verified." << endl;
+    } else {
+        cout << "Kepler's third law is not satisfied." << endl;
+    }
+}
+
+
 int main() {
     double y[num_equations] = {0.0};
-    double masses[N] = {Mass_Sun, Mass_Sun};
+    double masses[N] = {Mass_Sun, Mass_Earth};
 
-    y[0] = 0.0; y[1] = 0.0;
-    y[2] = Distance_Earth_Sun; y[3] = 0.0;
-    y[4] = 0.0; y[5] = 0.0;
-    y[6] = 0.0; y[7] = 100000.0;
+    y[0] = 0.0;                 y[1] = 0.0;
+    y[2] = Distance_Earth_Sun;  y[3] = 0.0;
+    y[4] = 0.0;                 y[5] = 0.0;
+    y[6] = 0.0;                 y[7] = 100000.0;
 
     ofstream output("n_body_simulation_C.txt");
     ofstream energy_output("n_body_energy_C.txt");
@@ -135,5 +155,10 @@ int main() {
     std::chrono::duration<double> elapsed = end - start;
     cout << "Temps d'exécution : " << elapsed.count() << " secondes" << endl;
 
+
+    verify_kepler_law(y, masses);
+
+
     return 0;
 }
+

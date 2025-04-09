@@ -15,14 +15,14 @@ for i in range(num_particles):
     x = positions[:500, 2 * i]     # x-coordinates of particle i
     y = positions[:500, 2 * i + 1] # y-coordinates of particle i
     # t = time[:]
-    plt.plot(x, y, label=f'Particle {i + 1}', marker='o')
+    plt.plot(x, y, label=f'Corps {i + 1}', marker='o')
 
 
 
 # Add labels, legend, and grid
-plt.xlabel('x position (in meters)')
-plt.ylabel('y position (in meters)')
-plt.title('Trajectories of Bodies')
+plt.xlabel('position x (en mètres)')
+plt.ylabel('position y (en mètres)')
+plt.title('Trajectoires des corps')
 plt.legend()
 plt.grid(True)
 
