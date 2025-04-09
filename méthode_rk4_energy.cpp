@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <vector>
+#include <chrono> 
 
 using namespace std;
 
@@ -104,6 +105,8 @@ int main() {
     ofstream output("n_body_simulation.txt");
     ofstream energy_output("n_body_energy.txt");
 
+    auto start = std::chrono::high_resolution_clock::now(); // début du chrono
+
     double t = 0.0;
     double E0 = calculate_energy(y, masses);
     while (t < Tmax) {
@@ -122,5 +125,9 @@ int main() {
 
     output.close();
     energy_output.close();
+    
+    auto end = std::chrono::high_resolution_clock::now();   // fin du chrono
+    std::chrono::duration<double> elapsed = end - start;
+    cout << "Temps d'exécution : " << elapsed.count() << " secondes" << endl;
     return 0;
 }
