@@ -6,8 +6,8 @@ t = data[:, 0]
 E = data[:, 1]
 
 plt.plot(t, E)
-plt.xlabel("Time (s)")
-plt.ylabel("Total Energy (J)")
+plt.xlabel("Temps (s)")
+plt.ylabel("Énergie (J)")
 plt.title("Conservation de l'énergie")
 plt.grid()
 plt.show()

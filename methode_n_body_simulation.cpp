@@ -76,8 +76,8 @@ void rk4(int n, double t, vector<double>& y, double dx, void deriv(int, double, 
 
 
 int main() {
-    // Initialisation des masses pour le système Alpha Centauri
-    vector<double> masses = {Mass_Sun, Mass_Sun, Mass_Sun}; // Masses en multiples de la masse terrestre
+
+    vector<double> masses = {Mass_Sun, Mass_Sun, Mass_Sun}; // Masses en multiples de la masse du Soleil
 
     int num_equations = 4 * N; // 2 for position and 2 for velocity per particle
     vector<double> y(num_equations, 0.0); // State vector: [x1, y1, x2, y2, ..., vx1, vy1, vx2, vy2, ...]
